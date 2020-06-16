@@ -1,0 +1,23 @@
+# Application Apache directives
+
+# Load using:
+#	# Seminar listings system, integrating talks.cam
+#	Include /path/to/seminar-listings/.httpd.conf.extract.txt
+#	Use MacroSeminarListings /path/to/seminar-listings "/path/to/site/:/path/to/seminar-listings/:/path/to/php/libraries/"
+
+
+<Macro MacroSeminarListings $baseUrl $includePath>
+	
+	# Include path
+	<LocationMatch $baseUrl>
+		php_value include_path "$includePath"
+	</LocationMatch>
+	
+	# Front controller application support
+	Use MacroFrontControllerApplication "$baseUrl/" "Seminar listings"
+	
+	# Application routing
+	#RewriteRule ^$baseUrl/(someaction)/$ $baseUrl/index.html?action=$1 [L]
+	#RewriteRule ^$baseUrl/(someaction)$ $baseUrl/$1/ [R]
+	
+</Macro>
