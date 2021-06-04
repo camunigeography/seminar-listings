@@ -41,8 +41,18 @@
 	<div class="campl-content-container">
 		
 		<div class="campl-heading-container">
-			<h2>Title</h2>
+			<h2>Forthcoming seminars</h2>
 		</div>
+		
+		<ul class="spaced small">
+		{if ($seminars)}
+		{foreach from=$seminars item=seminar}
+			<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|htmlspecialchars} <a href="{$seminar.url}">Details&hellip;</a></li>
+		{/foreach}
+		{else}
+			<li>There are no forthcoming seminars scheduled at present.</li>
+		{/if}
+		</ul>
 		
 	</div>
 </div>

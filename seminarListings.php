@@ -57,8 +57,8 @@ class seminarListings extends frontControllerApplication
 			
 			-- Settings
 			CREATE TABLE IF NOT EXISTS `settings` (
-			  `id` int(11) NOT NULL COMMENT 'Automatic key (ignored)' PRIMARY KEY,
-			  `somesetting` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Some setting',
+			  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY,
+			  `masterList` VARCHAR(50) NOT NULL DEFAULT 'master' COMMENT 'Master list moniker'
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Settings';
 			INSERT INTO settings (id) VALUES (1);
 			
@@ -103,13 +103,22 @@ class seminarListings extends frontControllerApplication
 		# Start the HTML
 		$html = '';
 		
+		# Remove the master list from the main listing
+		$lists = $this->lists;
+		if (isSet ($lists[$this->settings['masterList']])) {
+			unset ($lists[$this->settings['masterList']]);
+		}
+		
 		# Split by archive status
-		$listsByGroup = application::regroup ($this->lists, 'archived');
+		$listsByGroup = application::regroup ($lists, 'archived');
 		
 		# Send to the template
 		$this->template['lists'] = $listsByGroup[''];
 		$this->template['archivedLists'] = $listsByGroup[1];
 		
+		# Get the seminars
+		$this->template['seminars'] = $this->getSeminars ($this->settings['masterList']);
+
 		# Process the template
 		$html = $this->templatise ();
 		
