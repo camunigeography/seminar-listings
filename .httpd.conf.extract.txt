@@ -20,7 +20,7 @@
 	Use MacroFrontControllerApplication "$baseUrl/" "Seminar listings"
 	
 	# Editing (defined before list names)
-	Use MacroSinenomineEmbeddedTable "$baseUrl" "/lists" "editing"
+	Use MacroSinenomineEmbeddedWholeDb "$baseUrl" "/data" "editing"
 	
 	# Application routing
 	RewriteRule ^$baseUrl/([a-zA-Z]+)/$ $baseUrl/index.html?action=showlist&item=$1 [L]

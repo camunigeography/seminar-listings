@@ -39,7 +39,7 @@ class seminarListings extends frontControllerApplication
 			),
 			'editing' => array (
 				'description' => false,
-				'url' => 'lists/',
+				'url' => 'data/',
 				'tab' => 'Edit lists',
 				'icon' => 'pencil',
 				'administrator' => true,
@@ -271,6 +271,12 @@ class seminarListings extends frontControllerApplication
 		# Databinding attributes
 		$dataBindingAttributes = array ();
 		
+		# Define tables to deny editing for
+		$deny[$this->settings['database']] = array (
+			'administrators',
+			'settings',
+		);
+		
 		# Define general sinenomine settings
 		$sinenomineExtraSettings = array (
 				'fieldFiltering' => false,
@@ -280,8 +286,8 @@ class seminarListings extends frontControllerApplication
 				'int1ToCheckbox' => true,
 		);
 		
-		# Delegate to the standard function for editing
-		echo $this->editingTable ($this->settings['table'], $dataBindingAttributes, 'ultimateform', false, $sinenomineExtraSettings);
+		# Run the standard front controller editing integration
+		echo parent::editing ($dataBindingAttributes, $deny, $sinenomineExtraSettings);
 	}
 }
 
