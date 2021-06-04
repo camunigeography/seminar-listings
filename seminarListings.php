@@ -30,11 +30,11 @@ class seminarListings extends frontControllerApplication
 	{
 		# Define available tasks
 		$actions = array (
-			'someaction' => array (
-				'description' => 'Do some action',
-				'url' => 'someaction/',
-				'tab' => 'Some action',
-				'icon' => 'add',
+			'showlist' => array (
+				'description' => false,
+				'url' => '%1/',
+				'tab' => 'Show list',
+				'icon' => 'application_view_list',
 			),
 		);
 		
@@ -202,6 +202,30 @@ class seminarListings extends frontControllerApplication
 		
 		# Return the data
 		return $list;
+	}
+	
+	
+	# Function to show a list
+	public function showlist ($moniker)
+	{
+		# Ensure there is a valid moniker
+		if (!strlen ($moniker) || !isSet ($this->lists[$moniker])) {
+			$html = $this->page404 ();
+			echo $html;
+			return;
+		}
+		
+		# Get the seminars
+		$this->template['seminars'] = $this->getSeminars ($moniker);
+		
+		# Send the list metadata to the template
+		$this->template['list'] = $this->lists[$moniker];
+		
+		# Process the template
+		$html = $this->templatise ();
+		
+		# Show the HTML
+		echo $html;
 	}
 	
 	

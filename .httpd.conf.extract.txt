@@ -17,7 +17,7 @@
 	Use MacroFrontControllerApplication "$baseUrl/" "Seminar listings"
 	
 	# Application routing
-	#RewriteRule ^$baseUrl/(someaction)/$ $baseUrl/index.html?action=$1 [L]
-	#RewriteRule ^$baseUrl/(someaction)$ $baseUrl/$1/ [R]
+	RewriteRule ^$baseUrl/([a-zA-Z]+)/$ $baseUrl/index.html?action=showlist&item=$1 [L]
+	RewriteRule ^$baseUrl/([a-zA-Z]+)$ $baseUrl/$1/ [R]
 	
 </Macro>
