@@ -74,7 +74,7 @@ class seminarListings extends frontControllerApplication
 			CREATE TABLE IF NOT EXISTS `lists` (
 			  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Automatic key',
 			  `name` varchar(255) NOT NULL COMMENT 'List name',
-			  `talksdotcamId` int NOT NULL COMMENT 'Talks.cam list number (see end of URL)',
+			  `talksdotcamListNumber` int NOT NULL COMMENT 'Talks.cam list number (see end of URL)',
 			  `moniker` varchar(50) NOT NULL COMMENT 'URL moniker',
 			  `archived` tinyint DEFAULT NULL COMMENT 'Archived?',
 			  `ordering` INT NOT NULL DEFAULT '5' COMMENT 'Ordering (1=first, 9=last)',
@@ -152,7 +152,7 @@ class seminarListings extends frontControllerApplication
 		# Decorate the lists
 		foreach ($lists as $moniker => $list) {
 			$lists[$moniker]['link'] = $this->baseUrl . "/{$moniker}/";
-			$lists[$moniker]['talksdotcamUrl'] = 'https://talks.cam.ac.uk/show/index/' . $list['talksdotcamId'];
+			$lists[$moniker]['talksdotcamUrl'] = 'https://talks.cam.ac.uk/show/index/' . $list['talksdotcamListNumber'];
 			$lists[$moniker]['thumbnail'] = $this->getThumbnail ($moniker);
 		}
 		
@@ -168,7 +168,7 @@ class seminarListings extends frontControllerApplication
 		if (!isSet ($this->lists[$moniker])) {return array ();}
 		
 		# Get the feed
-		$listId = $this->lists[$moniker]['talksdotcamId'];
+		$listId = $this->lists[$moniker]['talksdotcamListNumber'];
 		$list = $this->getFeed ($listId, $archived);
 		
 		# Add the metadata from the upstream feed to the list metadata
