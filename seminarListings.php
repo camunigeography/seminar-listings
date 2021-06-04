@@ -69,6 +69,7 @@ class seminarListings extends frontControllerApplication
 			  `talksdotcamId` int NOT NULL COMMENT 'Talks.cam list number (see end of URL)',
 			  `moniker` varchar(50) NOT NULL COMMENT 'URL moniker',
 			  `archived` tinyint DEFAULT NULL COMMENT 'Archived?',
+			  `ordering` INT NOT NULL DEFAULT '5' COMMENT 'Ordering (1=first, 9=last)',
 			  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Lists';
 		";
@@ -131,7 +132,7 @@ class seminarListings extends frontControllerApplication
 	private function getLists ()
 	{
 		# Get the current lists
-		$listsById = $this->databaseConnection->select ($this->settings['database'], $this->settings['table'], array (), array (), true, $orderBy = 'name');
+		$listsById = $this->databaseConnection->select ($this->settings['database'], $this->settings['table'], array (), array (), true, $orderBy = 'archived, ordering, name');
 		
 		# Reorganise by moniker
 		$lists = application::reindex ($listsById, 'moniker', false);
