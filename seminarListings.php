@@ -275,6 +275,9 @@ class seminarListings extends frontControllerApplication
 			return;
 		}
 		
+		# Create the droplist
+		$this->template['droplist'] = $this->droplistHtml ($moniker);
+		
 		# Get the seminars
 		$this->template['seminars'] = $this->getSeminars ($moniker);
 		
@@ -289,6 +292,37 @@ class seminarListings extends frontControllerApplication
 		
 		# Show the HTML
 		echo $html;
+	}
+	
+	
+	# Function to create the droplist
+	private function droplistHtml ($current)
+	{
+		# Create the lists
+		$lists = array ();
+		$lists[$this->baseUrl . '/'] = 'Home';
+		foreach ($this->lists as $moniker => $list) {
+			if ($moniker == $this->settings['masterList']) {continue;}		// Skip master list
+			$url = $list['link'];
+			$lists[$url] = $list['name'];
+		}
+		
+		# No droplist if only one entry
+		if (count ($lists) < 2) {return false;}
+		
+		# Truncate strings
+		foreach ($lists as $url => $name) {
+			$lists[$url] = application::str_truncate ($name, 25, false, false, $respectWordBoundaries = false, $htmlMode = false);
+		}
+		
+		# Set current
+		$current = $this->baseUrl . '/' . $current . '/';
+		
+		# Create the HTML
+		$html = application::htmlJumplist ($lists, $current, '', 'jumplist', 0, 'jumplist', $introductoryText = false);
+		
+		# Return the HTML
+		return $html;
 	}
 	
 	
