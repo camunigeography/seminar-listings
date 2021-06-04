@@ -2,9 +2,10 @@
 
 <div class="campl-column9 campl-main-content">
 	
-	<h2>Seminar series</h2>
+	{foreach from=$listsByCategory key=category item=lists}
+	<h3>{$category|htmlspecialchars}</h3>
 	<div class="clearfix">
-	{foreach from=$lists item=list name=lists}
+		{foreach from=$lists item=list name=lists}
 		<div class="campl-column6">
 			<div class="campl-content-container">
 				<div class="campl-horizontal-teaser campl-teaser clearfix campl-focus-teaser">
@@ -20,12 +21,13 @@
 				</div>
 			</div>
 		</div>
-	{if $smarty.foreach.lists.iteration is div by 2}
+		{if $smarty.foreach.lists.iteration is div by 2}
+		</div>
+		<div class="clearfix">
+		{/if}
+		{/foreach}
 	</div>
-	<div class="clearfix">
-	{/if}
 	{/foreach}
-	</div>
 	
 	{if ($archivedLists)}
 	<h2>Previous seminar series</h2>

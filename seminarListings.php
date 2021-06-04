@@ -76,10 +76,20 @@ class seminarListings extends frontControllerApplication
 			  `name` varchar(255) NOT NULL COMMENT 'List name',
 			  `talksdotcamListNumber` int NOT NULL COMMENT 'Talks.cam list number (see end of URL)',
 			  `moniker` varchar(50) NOT NULL COMMENT 'URL moniker',
+			  `categoryId` VARCHAR(255) NULL COMMENT 'Category',
 			  `archived` tinyint DEFAULT NULL COMMENT 'Archived?',
 			  `ordering` INT NOT NULL DEFAULT '5' COMMENT 'Ordering (1=first, 9=last)',
 			  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Lists';
+			
+			-- Categories
+			CREATE TABLE IF NOT EXISTS `categories` (
+			  `id` varchar(255) NOT NULL COMMENT 'Moniker',
+			  `title` varchar(255) NOT NULL COMMENT 'Title',
+			  `ordering` int NOT NULL DEFAULT '5' COMMENT 'Ordering (1=first, 9=last)',
+			  PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Categories';
+			INSERT INTO `categories` VALUES ('main', 'Main seminars', NULL, 5);
 		";
 	}
 	
@@ -125,8 +135,11 @@ class seminarListings extends frontControllerApplication
 		# Split by archive status
 		$listsByGroup = application::regroup ($lists, 'archived');
 		
+		# Split non-archived lists by category title
+		$listsByCategory = application::regroup ($listsByGroup[''], 'categoryTitle', $removeGroupField = false);
+		
 		# Send to the template
-		$this->template['lists'] = $listsByGroup[''];
+		$this->template['listsByCategory'] = $listsByCategory;
 		$this->template['archivedLists'] = $listsByGroup[1];
 		
 		# Get the seminars
@@ -144,7 +157,14 @@ class seminarListings extends frontControllerApplication
 	private function getLists ()
 	{
 		# Get the current lists
-		$listsById = $this->databaseConnection->select ($this->settings['database'], $this->settings['table'], array (), array (), true, $orderBy = 'archived, ordering, name');
+		$query = "SELECT
+			lists.*,
+			categories.title AS categoryTitle
+		FROM lists
+		LEFT JOIN categories ON lists.categoryId = categories.id
+		ORDER BY archived, categories.ordering, lists.ordering, name
+		;";
+		$listsById = $this->databaseConnection->getData ($query);
 		
 		# Reorganise by moniker
 		$lists = application::reindex ($listsById, 'moniker', false);
@@ -279,6 +299,7 @@ class seminarListings extends frontControllerApplication
 		
 		# Define general sinenomine settings
 		$sinenomineExtraSettings = array (
+				'simpleJoin' => true,
 				'fieldFiltering' => false,
 				'hideSearchBox' => true,
 				'hideExport' => true,
