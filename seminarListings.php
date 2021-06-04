@@ -100,7 +100,18 @@ class seminarListings extends frontControllerApplication
 	# Home page
 	public function home ()
 	{
-		//
+		# Start the HTML
+		$html = '';
+		
+		# Split by archive status
+		$listsByGroup = application::regroup ($this->lists, 'archived');
+		
+		# Send to the template
+		$this->template['lists'] = $listsByGroup[''];
+		$this->template['archivedLists'] = $listsByGroup[1];
+		
+		# Process the template
+		$html = $this->templatise ();
 		
 		# Show the HTML
 		echo $html;
