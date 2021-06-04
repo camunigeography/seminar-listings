@@ -251,16 +251,6 @@ class seminarListings extends frontControllerApplication
 		# Show the HTML
 		echo $html;
 	}
-	
-	
-	# Function to do some action
-	public function someaction ()
-	{
-		//
-		
-		# Show the HTML
-		echo $html;
-	}
 }
 
 ?>
