@@ -1,13 +1,12 @@
 
 
 <div class="campl-column8 campl-main-content" id="content">
-	<div class="campl-content-container">
-		
-		<h2>{$list.name|htmlspecialchars}</h2>
-		
-		{$list.detailsHtml}
-		
-		<div class="graybox">
+	
+	<h2>{$list.name|htmlspecialchars}</h2>
+	
+	{$list.detailsHtml}
+	
+	<div class="graybox">
 		{if ($seminars)}
 		<ul class="spaced small">
 		{foreach from=$seminars item=seminar}
@@ -17,9 +16,8 @@
 		{else}
 		<p>There are no forthcoming seminars scheduled at present.</p>
 		{/if}
-		</div>
-		
 	</div>
+	
 </div>
 
 
