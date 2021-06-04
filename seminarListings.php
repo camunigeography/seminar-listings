@@ -15,6 +15,7 @@ class seminarListings extends frontControllerApplication
 			'administrators'		=> 'administrators',
 			'tabUlClass'			=> 'tabsflat',
 			'database'				=> 'seminarlistings',
+			'useTemplating'			=> true,
 		);
 		
 		# Return the defaults
