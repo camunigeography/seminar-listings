@@ -138,6 +138,64 @@ class seminarListings extends frontControllerApplication
 	}
 	
 	
+	# Function to get seminars in a list
+	private function getSeminars ($moniker)
+	{
+		# Ensure the list ID exists
+		if (!isSet ($this->lists[$moniker])) {return array ();}
+		
+		# Get the feed
+		$listId = $this->lists[$moniker]['talksdotcamId'];
+		$list = $this->getFeed ($listId);
+		
+		# Add the metadata from the upstream feed to the list metadata
+		$this->lists[$moniker]['details'] = $list['details'];
+		
+		# Add HTML version of the details
+		$this->lists[$moniker]['detailsHtml'] = application::formatTextBlock ($list['details']);
+		
+		# Convert talks to simplified structure
+		$seminars = array ();
+		foreach ($list['talk'] as $talk) {
+			$seminars[] = array (
+				'id' => $talk['id'],
+				'title' => $talk['title'],
+				'speaker' => $talk['speaker'],
+				'abstract' => $talk['abstract'],
+				'venue' => $talk['venue'],
+				'date' => date ('jS F Y', strtotime ($talk['start_time'])),
+				'url' => $this->baseUrl . '//#' . $talk['id'],
+			);
+		}
+		
+		# Return the list of seminars
+		return $seminars;
+	}
+	
+	
+	# Function to get a feed for a list
+	private function getFeed ($listId)
+	{
+		# Construct the URL
+		$url = "https://talks.cam.ac.uk/show/xml/{$listId}?layout=empty";
+		
+		# Get the data
+		ini_set ('default_socket_timeout', 4);
+		$xmlString = file_get_contents ($url);
+		
+		# Convert to XML
+		$xml = simplexml_load_string ($xmlString);
+		$json = json_encode ($xml);
+		$list = json_decode ($json, true);
+		
+		# End if none
+		if (!$list || !isSet ($list['talk'])) {return false;}
+		
+		# Return the data
+		return $list;
+	}
+	
+	
 	# Function to do some action
 	public function someaction ()
 	{
