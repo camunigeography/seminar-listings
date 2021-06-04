@@ -94,6 +94,9 @@ class seminarListings extends frontControllerApplication
 		# Get the lists
 		$this->lists = $this->getLists ();
 		
+		# Send administrator status to the template
+		$this->template['administrator'] = $this->userIsAdministrator;
+		
 	}
 	
 	
