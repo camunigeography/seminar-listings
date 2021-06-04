@@ -236,8 +236,15 @@ class seminarListings extends frontControllerApplication
 		$json = json_encode ($xml);
 		$list = json_decode ($json, true);
 		
-		# End if none
-		if (!$list || !isSet ($list['talk'])) {return false;}
+		# If no talks, create empty list
+		if (!$list || !isSet ($list['talk'])) {
+			$list['talk'] = array ();
+		}
+		
+		# If only one talk, wrap as list
+		if ($list && isSet ($list['talk']) && isSet ($list['talk']['id'])) {
+			$list['talk'] = array ($list['talk']);
+		}
 		
 		# Return the data
 		return $list;
