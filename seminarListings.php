@@ -15,6 +15,7 @@ class seminarListings extends frontControllerApplication
 			'administrators'		=> 'administrators',
 			'tabUlClass'			=> 'tabsflat',
 			'database'				=> 'seminarlistings',
+			'disableTabs'			=> true,
 			'useTemplating'			=> true,
 		);
 		
@@ -70,6 +71,17 @@ class seminarListings extends frontControllerApplication
 		";
 	}
 	
+	
+	
+	# Additional standard processing (pre-actions)
+	public function mainPreActions ()
+	{
+		# Enable tabbing for admins
+		if ($this->userIsAdministrator) {
+			$this->settings['disableTabs'] = false;
+		}
+		
+	}
 	
 	
 	# Additional processing
