@@ -18,6 +18,17 @@
 		{/if}
 	</div>
 	
+	{if ($archived)}
+	<h3 id="previous">Previous seminars</h3>
+	<div class="graybox">
+		<ul class="spaced small">
+		{foreach from=$archived item=seminar}
+			<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|htmlspecialchars} <a href="{$seminar.url}">Details&hellip;</a></li>
+		{/foreach}
+		</ul>
+	</div>
+	{/if}
+	
 </div>
 
 

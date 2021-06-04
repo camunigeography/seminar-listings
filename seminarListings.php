@@ -150,14 +150,14 @@ class seminarListings extends frontControllerApplication
 	
 	
 	# Function to get seminars in a list
-	private function getSeminars ($moniker)
+	private function getSeminars ($moniker, $archived = false)
 	{
 		# Ensure the list ID exists
 		if (!isSet ($this->lists[$moniker])) {return array ();}
 		
 		# Get the feed
 		$listId = $this->lists[$moniker]['talksdotcamId'];
-		$list = $this->getFeed ($listId);
+		$list = $this->getFeed ($listId, $archived);
 		
 		# Add the metadata from the upstream feed to the list metadata
 		$this->lists[$moniker]['details'] = $list['details'];
@@ -185,10 +185,15 @@ class seminarListings extends frontControllerApplication
 	
 	
 	# Function to get a feed for a list
-	private function getFeed ($listId)
+	private function getFeed ($listId, $archived = false)
 	{
 		# Construct the URL
 		$url = "https://talks.cam.ac.uk/show/xml/{$listId}?layout=empty";
+		
+		# For archived mode, add additional parameters
+		if ($archived) {
+			$url .= '&seconds_after_today=0&reverse_order=true';
+		}
 		
 		# Get the data
 		ini_set ('default_socket_timeout', 4);
@@ -233,6 +238,9 @@ class seminarListings extends frontControllerApplication
 		
 		# Get the seminars
 		$this->template['seminars'] = $this->getSeminars ($moniker);
+		
+		# Get the archived seminars
+		$this->template['archived'] = $this->getSeminars ($moniker, true);
 		
 		# Send the list metadata to the template
 		$this->template['list'] = $this->lists[$moniker];
