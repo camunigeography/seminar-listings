@@ -5,7 +5,7 @@
 		
 		<h2>Seminar series</h2>
 		<div class="clearfix">
-		{foreach from=$lists item=list}
+		{foreach from=$lists item=list name=lists}
 			<div class="campl-column6">
 				<div class="campl-content-container">
 					<div class="campl-horizontal-teaser campl-teaser clearfix campl-focus-teaser">
@@ -21,6 +21,10 @@
 					</div>
 				</div>
 			</div>
+		{if $smarty.foreach.lists.iteration is div by 2}
+		</div>
+		<div class="clearfix">
+		{/if}
 		{/foreach}
 		</div>
 		
