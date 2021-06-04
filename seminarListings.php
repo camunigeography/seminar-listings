@@ -289,7 +289,9 @@ class seminarListings extends frontControllerApplication
 	public function editing ($attributes = array (), $deny = false, $sinenomineExtraSettings = array ())
 	{
 		# Databinding attributes
-		$dataBindingAttributes = array ();
+		$dataBindingAttributes = array (
+			array ($this->settings['database'], $this->settings['table'], 'talksdotcamListNumber', array ('prepend' => 'www.talks.cam.ac.uk/show/index/')),
+		);
 		
 		# Define tables to deny editing for
 		$deny[$this->settings['database']] = array (
