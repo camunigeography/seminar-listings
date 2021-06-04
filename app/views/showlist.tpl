@@ -41,6 +41,12 @@
 <div class="campl-column4 campl-secondary-content">
 	<div class="campl-content-container">
 		
+		{if $administrator}
+		<div class="clearfix">
+			<p class="primaryaction right"><a href="{$baseUrl}/lists/{$list.id}/edit.html" title="Edit the seminars listing, on talks.cam"><img src="/images/icons/pencil.png" class="icon" /> Edit list info</a></p>
+		</div>
+		{/if}
+		
 		<div class="campl-heading-container">
 			<h2>More details</h2>
 		</div>

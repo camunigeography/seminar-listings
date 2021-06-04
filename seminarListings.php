@@ -18,6 +18,7 @@ class seminarListings extends frontControllerApplication
 			'table'					=> 'lists',
 			'disableTabs'			=> true,
 			'useTemplating'			=> true,
+			'useEditing'			=> true,
 		);
 		
 		# Return the defaults
@@ -35,6 +36,13 @@ class seminarListings extends frontControllerApplication
 				'url' => '%1/',
 				'tab' => 'Show list',
 				'icon' => 'application_view_list',
+			),
+			'editing' => array (
+				'description' => false,
+				'url' => 'lists/',
+				'tab' => 'Edit lists',
+				'icon' => 'pencil',
+				'administrator' => true,
 			),
 		);
 		
@@ -94,7 +102,8 @@ class seminarListings extends frontControllerApplication
 		# Get the lists
 		$this->lists = $this->getLists ();
 		
-		# Send administrator status to the template
+		# Send key properties to the template
+		$this->template['baseUrl'] = $this->baseUrl;
 		$this->template['administrator'] = $this->userIsAdministrator;
 		
 	}
@@ -253,6 +262,26 @@ class seminarListings extends frontControllerApplication
 		
 		# Show the HTML
 		echo $html;
+	}
+	
+	
+	# Admin editing section, substantially delegated to the sinenomine editing component
+	public function editing ($attributes = array (), $deny = false, $sinenomineExtraSettings = array ())
+	{
+		# Databinding attributes
+		$dataBindingAttributes = array ();
+		
+		# Define general sinenomine settings
+		$sinenomineExtraSettings = array (
+				'fieldFiltering' => false,
+				'hideSearchBox' => true,
+				'hideExport' => true,
+				'autofocus' => true,
+				'int1ToCheckbox' => true,
+		);
+		
+		# Delegate to the standard function for editing
+		echo $this->editingTable ($this->settings['table'], $dataBindingAttributes, 'ultimateform', false, $sinenomineExtraSettings);
 	}
 }
 
