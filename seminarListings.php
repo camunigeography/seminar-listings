@@ -33,7 +33,7 @@ class seminarListings extends frontControllerApplication
 		$actions = array (
 			'showlist' => array (
 				'description' => false,
-				'url' => '%1/',
+				'url' => '',
 				'tab' => 'Show list',
 				'icon' => 'application_view_list',
 			),
