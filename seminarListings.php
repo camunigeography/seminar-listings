@@ -143,7 +143,7 @@ class seminarListings extends frontControllerApplication
 		$this->template['archivedLists'] = $listsByGroup[1];
 		
 		# Get the seminars
-		$this->template['seminars'] = $this->getSeminars ($this->settings['masterList']);
+		$this->template['seminars'] = $this->getSeminars ($this->settings['masterList'], false, 10);
 
 		# Process the template
 		$html = $this->templatise ();
@@ -182,14 +182,14 @@ class seminarListings extends frontControllerApplication
 	
 	
 	# Function to get seminars in a list
-	private function getSeminars ($moniker, $archived = false)
+	private function getSeminars ($moniker, $archived = false, $limit = false)
 	{
 		# Ensure the list ID exists
 		if (!isSet ($this->lists[$moniker])) {return array ();}
 		
 		# Get the feed
 		$listId = $this->lists[$moniker]['talksdotcamListNumber'];
-		$list = $this->getFeed ($listId, $archived);
+		$list = $this->getFeed ($listId, $archived, $limit);
 		
 		# Add the metadata from the upstream feed to the list metadata
 		$this->lists[$moniker]['details'] = $list['details'];
@@ -217,7 +217,7 @@ class seminarListings extends frontControllerApplication
 	
 	
 	# Function to get a feed for a list
-	private function getFeed ($listId, $archived = false)
+	private function getFeed ($listId, $archived = false, $limit = false)
 	{
 		# Construct the URL
 		$url = "https://talks.cam.ac.uk/show/xml/{$listId}?layout=empty";
@@ -225,6 +225,11 @@ class seminarListings extends frontControllerApplication
 		# For archived mode, add additional parameters
 		if ($archived) {
 			$url .= '&seconds_after_today=0&reverse_order=true';
+		}
+		
+		# Add limit if required
+		if ($limit) {
+			$url .= '&limit=' . $limit;
 		}
 		
 		# Get the data
