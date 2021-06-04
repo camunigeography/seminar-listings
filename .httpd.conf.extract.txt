@@ -6,12 +6,15 @@
 #	Use MacroSeminarListings /path/to/seminar-listings "/path/to/site/:/path/to/seminar-listings/:/path/to/smarty/:/path/to/php/libraries/"
 
 
-<Macro MacroSeminarListings $baseUrl $includePath>
+<Macro MacroSeminarListings $baseUrl $repoPath $includePath>
 	
 	# Include path
 	<LocationMatch $baseUrl>
 		php_value include_path "$includePath"
 	</LocationMatch>
+	
+	# Data
+	Alias $baseUrl/images/ $repoPath/images/
 	
 	# Front controller application support
 	Use MacroFrontControllerApplication "$baseUrl/" "Seminar listings"

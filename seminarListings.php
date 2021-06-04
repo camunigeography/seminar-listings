@@ -141,6 +141,7 @@ class seminarListings extends frontControllerApplication
 		foreach ($lists as $moniker => $list) {
 			$lists[$moniker]['link'] = $this->baseUrl . "/{$moniker}/";
 			$lists[$moniker]['talksdotcamUrl'] = 'https://talks.cam.ac.uk/show/index/' . $list['talksdotcamId'];
+			$lists[$moniker]['thumbnail'] = $this->getThumbnail ($moniker);
 		}
 		
 		# Return the list of lists
@@ -203,6 +204,20 @@ class seminarListings extends frontControllerApplication
 		
 		# Return the data
 		return $list;
+	}
+	
+	
+	# Function to get a thumbnail for a list
+	private function getThumbnail ($moniker)
+	{
+		# Use list-specific thumbnail if present
+		$thumbnail = $this->baseUrl . '/' . $moniker . '/thumbnail153.jpg';
+		if (file_exists ($_SERVER['DOCUMENT_ROOT'] . $thumbnail)) {
+			return $thumbnail;
+		}
+		
+		# Otherwise return the default blank image
+		return $this->baseUrl . '/images/thumbnail153.png';
 	}
 	
 	
