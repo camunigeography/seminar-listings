@@ -209,8 +209,12 @@ class seminarListings extends frontControllerApplication
 				'speaker' => $talk['speaker'],
 				'abstract' => $talk['abstract'],
 				'venue' => $talk['venue'],
+				'special_message' => $talk['special_message'],
+				'time' => date ('g.ia, l jS F Y', strtotime ($talk['start_time'])),
 				'date' => date ('jS F Y', strtotime ($talk['start_time'])),
-				'url' => $this->baseUrl . '//#' . $talk['id'],
+				'day' => date ('d', strtotime ($talk['start_time'])),
+				'month' => date ('M', strtotime ($talk['start_time'])),
+				'url' => 'https://www.talks.cam.ac.uk/talk/index/' . $talk['id'],
 			);
 		}
 		

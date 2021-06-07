@@ -12,17 +12,39 @@
 	
 	{$list.detailsHtml}
 	
+	{if ($seminars)}
+	{foreach from=$seminars item=seminar}
+		
 	<div class="graybox">
-		{if ($seminars)}
-		<ul class="spaced small">
-		{foreach from=$seminars item=seminar}
-			<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|htmlspecialchars} <a href="{$seminar.url}">Details&hellip;</a></li>
-		{/foreach}
-		</ul>
-		{else}
-		<p>There are no forthcoming seminars scheduled at present.</p>
+		<h2>
+			<div>
+				<div class="campl-highlight-event-item clearfix">
+					<div class="campl-highlight-date-container">
+						<div class="campl-highlight-date">
+							<div class="campl-highlight-day">{$seminar.day}</div>{$seminar.month}
+						</div>
+					</div>
+					<div>{$seminar.title|htmlspecialchars}</div>
+				</div>
+			</div>
+		</h2>
+		{if ($seminar.special_message)}
+			<p class="specialmessage">{$seminar.special_message|htmlspecialchars}</p>
 		{/if}
+		<p><strong>Speaker:</strong> {$seminar.speaker|htmlspecialchars}</p>
+		<p><strong>Time:</strong> {$seminar.time}</p>
+		<p><strong>Venue:</strong> {$seminar.venue|htmlspecialchars}</p>
+		<p><em>{$seminar.abstract|htmlspecialchars}</em></p>
 	</div>
+		
+	{/foreach}
+	
+	{else}
+		<div class="graybox">
+			<p><strong>There are no forthcoming seminars scheduled at present.</strong></p>
+		</div>
+	{/if}
+	
 	
 	{if ($archived)}
 	<h3 id="previous">Previous seminars</h3>
