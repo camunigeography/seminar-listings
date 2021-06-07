@@ -51,7 +51,7 @@
 		<ul class="spaced small">
 		{if ($seminars)}
 		{foreach from=$seminars item=seminar}
-			<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|htmlspecialchars} <a href="{$seminar.url}">Details&hellip;</a></li>
+			<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|htmlspecialchars} <a href="{$seminar.link}">Details&hellip;</a></li>
 		{/foreach}
 		{else}
 			<li>There are no forthcoming seminars scheduled at present.</li>

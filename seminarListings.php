@@ -204,6 +204,7 @@ class seminarListings extends frontControllerApplication
 		# Convert talks to simplified structure
 		$seminars = array ();
 		foreach ($list['talk'] as $talk) {
+			$talksdotcamUrl = 'https://www.talks.cam.ac.uk/talk/index/' . $talk['id'];
 			$seminars[] = array (
 				'id' => $talk['id'],
 				'title' => $talk['title'],
@@ -215,7 +216,8 @@ class seminarListings extends frontControllerApplication
 				'date' => date ('jS F Y', strtotime ($talk['start_time'])),
 				'day' => date ('d', strtotime ($talk['start_time'])),
 				'month' => date ('M', strtotime ($talk['start_time'])),
-				'url' => 'https://www.talks.cam.ac.uk/talk/index/' . $talk['id'],
+				'url' => $talksdotcamUrl,
+				'link' => ($talk['seriesLink'] ? $talk['seriesLink'] . '#id' . $talk['id'] : $talksdotcamUrl),
 			);
 		}
 		
