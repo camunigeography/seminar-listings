@@ -10,7 +10,9 @@
 	</div>
 	{/if}
 	
-	{$list.detailsHtml}
+	<div class="details">
+		{$list.detailsHtml}
+	</div>
 	
 	{if !$list.archived}
 		
