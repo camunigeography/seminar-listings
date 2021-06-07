@@ -37,7 +37,7 @@
 			{/if}
 			<p><strong>Speaker:</strong> {$seminar.speaker|htmlspecialchars}</p>
 			<p><strong>Time:</strong> {$seminar.time}</p>
-			<p><strong>Venue:</strong> {$seminar.venue|htmlspecialchars}</p>
+			<p><strong>Location:</strong> {$seminar.venue|htmlspecialchars}</p>
 			<p><em>{$seminar.abstract|htmlspecialchars}</em></p>
 		</div>
 			
