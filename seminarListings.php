@@ -262,13 +262,38 @@ class seminarListings extends frontControllerApplication
 		# Decode entities arising from the original XML parser stage
 		$list = application::array_html_entity_decode ($list);
 		
-		# Update the talks.cam name in the lists database
+		# Update the talks.cam name in the lists database, which is used below to emulate list IDs for talks within combined lists
 		if ($list['name'] != $this->lists[$moniker]['talksdotcamName']) {
 			$this->databaseConnection->update ($this->settings['database'], $this->settings['table'], array ('talksdotcamName' => $list['name']), array ('moniker' => $moniker));
 		}
 		
+		# Add in the list series ID for each talk
+		$list['talk'] = $this->emulateSeriesIds ($list['talk']);
+		
 		# Return the data
 		return $list;
+	}
+	
+	
+	# Function to emulate the series ID, which is missing from the talks.cam XML feed
+	private function emulateSeriesIds ($talks)
+	{
+		# Create a lookup of talks.cam series name to ID
+		$seriesNameToId = array ();
+		foreach ($this->lists as $moniker => $list) {
+			$seriesName = $list['talksdotcamName'];
+			$seriesNameToId[$seriesName] = $moniker;
+		}
+		
+		# Add the missing field to the talks, where known
+		foreach ($talks as $index => $talk) {
+			$seriesName = $talk['series'];
+			$talks[$index]['seriesMoniker'] = (isSet ($seriesNameToId[$seriesName]) ? $seriesNameToId[$seriesName] : NULL);
+			$talks[$index]['seriesLink'] = (isSet ($seriesNameToId[$seriesName]) ? $this->baseUrl . '/' . $seriesNameToId[$seriesName] . '/' : NULL);
+		}
+		
+		# Return the list
+		return $talks;
 	}
 	
 	
