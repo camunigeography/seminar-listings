@@ -82,6 +82,7 @@ class seminarListings extends frontControllerApplication
 			  `categoryId` VARCHAR(255) NULL COMMENT 'Category',
 			  `archived` tinyint DEFAULT NULL COMMENT 'Archived?',
 			  `ordering` INT NOT NULL DEFAULT '5' COMMENT 'Ordering (1=first, 9=last)',
+			  `talksdotcamName` VARCHAR(255) NULL COMMENT 'Name of list in talks.cam (populated automatically)',
 			  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Lists';
 			
@@ -147,7 +148,7 @@ class seminarListings extends frontControllerApplication
 		
 		# Get the seminars
 		$this->template['seminars'] = $this->getSeminars ($this->settings['masterList'], false, 10);
-
+		
 		# Process the template
 		$html = $this->templatise ();
 		
@@ -192,7 +193,7 @@ class seminarListings extends frontControllerApplication
 		
 		# Get the feed
 		$listId = $this->lists[$moniker]['talksdotcamListNumber'];
-		$list = $this->getFeed ($listId, $archived, $limit);
+		$list = $this->getFeed ($listId, $moniker, $archived, $limit);
 		
 		# Add the metadata from the upstream feed to the list metadata
 		$this->lists[$moniker]['details'] = $list['details'];
@@ -224,7 +225,7 @@ class seminarListings extends frontControllerApplication
 	
 	
 	# Function to get a feed for a list
-	private function getFeed ($listId, $archived = false, $limit = false)
+	private function getFeed ($listId, $moniker, $archived = false, $limit = false)
 	{
 		# Construct the URL
 		$url = "https://talks.cam.ac.uk/show/xml/{$listId}?layout=empty";
@@ -260,6 +261,11 @@ class seminarListings extends frontControllerApplication
 		
 		# Decode entities arising from the original XML parser stage
 		$list = application::array_html_entity_decode ($list);
+		
+		# Update the talks.cam name in the lists database
+		if ($list['name'] != $this->lists[$moniker]['talksdotcamName']) {
+			$this->databaseConnection->update ($this->settings['database'], $this->settings['table'], array ('talksdotcamName' => $list['name']), array ('moniker' => $moniker));
+		}
 		
 		# Return the data
 		return $list;
@@ -347,6 +353,7 @@ class seminarListings extends frontControllerApplication
 		# Databinding attributes
 		$dataBindingAttributes = array (
 			array ($this->settings['database'], $this->settings['table'], 'talksdotcamListNumber', array ('prepend' => 'www.talks.cam.ac.uk/show/index/')),
+			array ($this->settings['database'], $this->settings['table'], 'talksdotcamName', array ('editable' => false)),
 		);
 		
 		# Define tables to deny editing for
