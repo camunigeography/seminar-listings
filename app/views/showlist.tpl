@@ -17,7 +17,7 @@
 		{if ($seminars)}
 		{foreach from=$seminars item=seminar}
 			
-			<div class="graybox">
+			<div class="graybox" id="id{$seminar.id}">
 				<h2>
 					<div>
 					<div class="campl-highlight-event-item clearfix">
@@ -54,7 +54,7 @@
 	<div class="graybox">
 		<ul class="spaced small">
 		{foreach from=$archived item=seminar}
-			<li><strong>{$seminar.date} - {$seminar.speaker|htmlspecialchars}</strong>:<br />{$seminar.title|htmlspecialchars}. <a href="{$seminar.url}">Details&hellip;</a></li>
+			<li id="id{$seminar.id}"><strong>{$seminar.date} - {$seminar.speaker|htmlspecialchars}</strong>:<br />{$seminar.title|htmlspecialchars}. <a href="{$seminar.url}">Details&hellip;</a></li>
 		{/foreach}
 		</ul>
 	</div>
