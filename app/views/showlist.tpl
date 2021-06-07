@@ -29,7 +29,7 @@
 	<div class="graybox">
 		<ul class="spaced small">
 		{foreach from=$archived item=seminar}
-			<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|htmlspecialchars} <a href="{$seminar.url}">Details&hellip;</a></li>
+			<li><strong>{$seminar.date} - {$seminar.speaker|htmlspecialchars}</strong>:<br />{$seminar.title|htmlspecialchars}. <a href="{$seminar.url}">Details&hellip;</a></li>
 		{/foreach}
 		</ul>
 	</div>
