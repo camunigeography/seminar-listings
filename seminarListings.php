@@ -58,15 +58,18 @@ class seminarListings extends frontControllerApplication
 			
 			-- Administrators
 			CREATE TABLE IF NOT EXISTS `administrators` (
-			  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Username' PRIMARY KEY,
+			  `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Username',
 			  `active` enum('','Yes','No') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Yes' COMMENT 'Currently active?',
-			  `privilege` enum('Administrator','Restricted administrator') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Administrator' COMMENT 'Administrator level'
+			  `privilege` enum('Administrator','Restricted administrator') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Administrator' COMMENT 'Administrator level',
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `moniker` (`moniker`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='System administrators';
 			
 			-- Settings
 			CREATE TABLE IF NOT EXISTS `settings` (
-			  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)' PRIMARY KEY,
-			  `masterList` VARCHAR(50) NOT NULL DEFAULT 'master' COMMENT 'Master list moniker'
+			  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)',
+			  `masterList` VARCHAR(50) NOT NULL DEFAULT 'master' COMMENT 'Master list moniker',
+			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Settings';
 			INSERT INTO settings (id) VALUES (1);
 			
