@@ -258,6 +258,9 @@ class seminarListings extends frontControllerApplication
 			$list['talk'] = array ($list['talk']);
 		}
 		
+		# Decode entities arising from the original XML parser stage
+		$list = application::array_html_entity_decode ($list);
+		
 		# Return the data
 		return $list;
 	}
