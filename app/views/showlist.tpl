@@ -58,7 +58,6 @@
 		
 		<ul class="campl-unstyled-list campl-related-links">
 			<li><a href="{$list.talksdotcamUrl}">More info on talks.cam</a></li>
-			<li>Info</li>
 		</ul>
 		
 	</div>
