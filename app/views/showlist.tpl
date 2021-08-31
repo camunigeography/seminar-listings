@@ -6,13 +6,19 @@
 	
 	{if $administrator}
 	<div class="clearfix">
-		<p class="primaryaction right"><a href="https://talks.cam.ac.uk/list/edit/{$list.talksdotcamListNumber}" title="Edit the seminars listing, on talks.cam"><img src="/images/icons/pencil.png" class="icon" /> Edit seminars</a></p>
+		<p class="primaryaction right"><a href="https://talks.cam.ac.uk/list/edit_details/{$list.talksdotcamListNumber}" title="Edit the list details, on talks.cam"><img src="/images/icons/pencil.png" class="icon" /> Edit list description</a></p>
 	</div>
 	{/if}
 	
 	<div class="details">
 		{$list.detailsHtml}
 	</div>
+	
+	{if $administrator}
+	<div class="clearfix">
+		<p class="primaryaction right"><a href="https://talks.cam.ac.uk/list/edit/{$list.talksdotcamListNumber}" title="Edit the seminars listing, on talks.cam"><img src="/images/icons/pencil.png" class="icon" /> Edit seminars</a></p>
+	</div>
+	{/if}
 	
 	{if !$list.archived}
 		
