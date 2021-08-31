@@ -69,6 +69,7 @@ class seminarListings extends frontControllerApplication
 			CREATE TABLE IF NOT EXISTS `settings` (
 			  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Automatic key (ignored)',
 			  `masterList` VARCHAR(50) NOT NULL DEFAULT 'master' COMMENT 'Master list moniker',
+			  `usersAutocomplete` VARCHAR(255) NULL COMMENT 'Users autocomplete URL',
 			  PRIMARY KEY (`id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Settings';
 			INSERT INTO settings (id) VALUES (1);
@@ -80,6 +81,7 @@ class seminarListings extends frontControllerApplication
 			  `talksdotcamListNumber` int NOT NULL COMMENT 'Talks.cam list number (see end of URL)',
 			  `moniker` varchar(50) NOT NULL COMMENT 'URL moniker',
 			  `categoryId` VARCHAR(255) NULL COMMENT 'Category',
+			  `editors` VARCHAR(255) NULL COMMENT 'Editors (local)',
 			  `archived` tinyint DEFAULT NULL COMMENT 'Archived?',
 			  `ordering` INT NOT NULL DEFAULT '5' COMMENT 'Ordering (1=first, 9=last)',
 			  `talksdotcamName` VARCHAR(255) NULL COMMENT 'Name of list in talks.cam (populated automatically)',
@@ -178,6 +180,13 @@ class seminarListings extends frontControllerApplication
 			$lists[$moniker]['link'] = $this->baseUrl . "/{$moniker}/";
 			$lists[$moniker]['talksdotcamUrl'] = 'https://talks.cam.ac.uk/show/index/' . $list['talksdotcamListNumber'];
 			$lists[$moniker]['thumbnail'] = $this->getThumbnail ($moniker);
+		}
+		
+		# Determine if the user is an editor, for each list
+		foreach ($lists as $moniker => $list) {
+			$editors = (strlen ($list['editors']) ? explode (',', $list['editors']) : array ());
+			$isEditor = ($this->userIsAdministrator || in_array ($this->user, $editors));
+			$lists[$moniker]['isEditor'] = $isEditor;
 		}
 		
 		# Return the list of lists
@@ -335,6 +344,9 @@ class seminarListings extends frontControllerApplication
 		# Send the list metadata to the template
 		$this->template['list'] = $this->lists[$moniker];
 		
+		# Determine edit rights
+		$this->template['isEditor'] = $this->lists[$moniker]['isEditor'];
+		
 		# Process the template
 		$html = $this->templatise ();
 		
@@ -381,6 +393,17 @@ class seminarListings extends frontControllerApplication
 		$dataBindingAttributes = array (
 			array ($this->settings['database'], $this->settings['table'], 'talksdotcamListNumber', array ('prepend' => 'www.talks.cam.ac.uk/show/index/')),
 			array ($this->settings['database'], $this->settings['table'], 'talksdotcamName', array ('editable' => false)),
+			array ($this->settings['database'], $this->settings['table'], 'editors', array (
+				'type' => 'select',
+				'multiple' => true,
+				'expandable' => true,
+				'separator' => ',',
+				'defaultPresplit' => true,
+				'autocomplete' => $this->settings['usersAutocomplete'],
+				'autocompleteOptions' => array ('delay' => 0),
+				'output' => array ('processing' => 'compiled'),
+				'description' => 'Currently this cannot be obtained automatically from talks.cam, so has to be copied here manually if you want the edit buttons to appear. Type a surname or username to get a username.',
+			), ),
 		);
 		
 		# Define tables to deny editing for

@@ -4,7 +4,7 @@
 	
 	<h2>{$list.name|htmlspecialchars}</h2>
 	
-	{if $administrator}
+	{if $isEditor}
 	<div class="clearfix">
 		<p class="primaryaction right"><a href="https://talks.cam.ac.uk/list/edit_details/{$list.talksdotcamListNumber}" title="Edit the list details, on talks.cam"><img src="/images/icons/pencil.png" class="icon" /> Edit list description</a></p>
 	</div>
@@ -14,7 +14,7 @@
 		{$list.detailsHtml}
 	</div>
 	
-	{if $administrator}
+	{if $isEditor}
 	<div class="clearfix">
 		<p class="primaryaction right"><a href="https://talks.cam.ac.uk/list/edit/{$list.talksdotcamListNumber}" title="Edit the seminars listing, on talks.cam"><img src="/images/icons/pencil.png" class="icon" /> Edit seminars</a></p>
 	</div>
