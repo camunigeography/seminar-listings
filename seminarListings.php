@@ -208,7 +208,7 @@ class seminarListings extends frontControllerApplication
 		$this->lists[$moniker]['details'] = $list['details'];
 		
 		# Add HTML version of the details
-		$this->lists[$moniker]['detailsHtml'] = application::formatTextBlock ($list['details']);
+		$this->lists[$moniker]['detailsHtml'] = application::makeClickableLinks (application::formatTextBlock ($list['details']));
 		
 		# Convert talks to simplified structure
 		$seminars = array ();
