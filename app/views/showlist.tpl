@@ -44,7 +44,7 @@
 			<p><strong>Speaker:</strong> {$seminar.speaker|htmlspecialchars}</p>
 			<p><strong>Time:</strong> {$seminar.time}</p>
 			<p><strong>Location:</strong> {$seminar.venue|htmlspecialchars}</p>
-			<p class="smaller">{$seminar.abstract|htmlspecialchars}</p>
+			{$seminar.abstractHtml}
 		</div>
 			
 		{/foreach}

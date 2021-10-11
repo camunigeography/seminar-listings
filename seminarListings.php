@@ -219,6 +219,7 @@ class seminarListings extends frontControllerApplication
 				'title' => $talk['title'],
 				'speaker' => $talk['speaker'],
 				'abstract' => $talk['abstract'],
+				'abstractHtml' => application::makeClickableLinks (application::formatTextBlock (str_replace ('@', '<span>&#64;</span>', $talk['abstract']), 'smaller')),
 				'venue' => $talk['venue'],
 				'special_message' => $talk['special_message'],
 				'time' => date ('g.ia, l jS F Y', strtotime ($talk['start_time'])),
