@@ -275,6 +275,7 @@ class seminarListings extends frontControllerApplication
 		$list = application::array_html_entity_decode ($list);
 		
 		# Update the talks.cam name in the lists database, which is used below to emulate list IDs for talks within combined lists
+		#!# Should this also update the local name, as otherwise they are out of sync - though this could mean over-long names or names that don't work well in a different context
 		if ($list['name'] != $this->lists[$moniker]['talksdotcamName']) {
 			$this->databaseConnection->update ($this->settings['database'], $this->settings['table'], array ('talksdotcamName' => $list['name']), array ('moniker' => $moniker));
 		}
