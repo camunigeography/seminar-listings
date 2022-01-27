@@ -2,6 +2,10 @@
 
 <div class="campl-column9 campl-main-content">
 	
+	{if $userIsAdministrator}
+		<p class="actions right"><a href="{$baseUrl}/data/lists/"><img src="/images/icons/pencil.png" class="icon" /> Edit lists</a></p>
+	{/if}
+	
 	{foreach from=$listsByCategory key=category item=lists}
 	<h3>{$category|htmlspecialchars}</h3>
 	<div class="clearfix">
