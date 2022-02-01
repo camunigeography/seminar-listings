@@ -208,7 +208,7 @@ class seminarListings extends frontControllerApplication
 		$this->lists[$moniker]['details'] = $list['details'];
 		
 		# Add HTML version of the details
-		$this->lists[$moniker]['detailsHtml'] = application::makeClickableLinks (application::formatTextBlock (str_replace ('@', '<span>&#64;</span>', $list['details'])));
+		$this->lists[$moniker]['detailsHtml'] = ($list['details'] ? application::makeClickableLinks (application::formatTextBlock (str_replace ('@', '<span>&#64;</span>', $list['details']))) : '<p><em>(No list description yet.)</em></p>');
 		
 		# Convert talks to simplified structure
 		$seminars = array ();
@@ -269,6 +269,11 @@ class seminarListings extends frontControllerApplication
 		# If only one talk, wrap as list
 		if ($list && isSet ($list['talk']) && isSet ($list['talk']['id'])) {
 			$list['talk'] = array ($list['talk']);
+		}
+		
+		# For details, if no description, convert empty array (which talks.cam returns) to string
+		if (is_array ($list['details']) && !empty ($list['details'])) {
+			$list['details'] = '';
 		}
 		
 		# Decode entities arising from the original XML parser stage
