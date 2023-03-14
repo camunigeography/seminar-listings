@@ -256,7 +256,7 @@ class seminarListings extends frontControllerApplication
 		ini_set ('default_socket_timeout', 4);
 		$xmlString = file_get_contents ($url);
 		
-		# Convert to XML
+		# Convert to XML; note that empty tags like <something></something> will become an empty array, which is fixed later below
 		$xml = simplexml_load_string ($xmlString);
 		$json = json_encode ($xml);
 		$list = json_decode ($json, true);
@@ -271,9 +271,18 @@ class seminarListings extends frontControllerApplication
 			$list['talk'] = array ($list['talk']);
 		}
 		
-		# For details, if no description, convert empty array (which talks.cam returns) to string
+		# For details, if no description, convert empty array (which SimpleXML returns when <details></details>) to string
 		if (is_array ($list['details']) && !empty ($list['details'])) {
 			$list['details'] = '';
+		}
+		
+		# For each talk, convert empty array (from SimpleXML treatment of <something></something>) to string
+		foreach ($list['talk'] as $index => $talk) {
+			foreach ($talk as $key => $value) {
+				if (is_array ($value) && empty ($value)) {
+					$list['talk'][$index][$key] = '';
+				}
+			}
 		}
 		
 		# Decode entities arising from the original XML parser stage
