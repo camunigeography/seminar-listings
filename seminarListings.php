@@ -1,7 +1,6 @@
 <?php
 
 # Class to create a seminar listings system, integrating talks.cam
-require_once ('frontControllerApplication.php');
 class seminarListings extends frontControllerApplication
 {
 	# Function to assign defaults additional to the general application defaults

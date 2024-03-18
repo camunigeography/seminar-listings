@@ -3,15 +3,10 @@
 # Load using:
 #	# Seminar listings system, integrating talks.cam
 #	Include /path/to/seminar-listings/.httpd.conf.extract.txt
-#	Use MacroSeminarListings /path/to/seminar-listings "/path/to/site/:/path/to/seminar-listings/:/path/to/smarty/:/path/to/php/libraries/"
+#	Use MacroSeminarListings /research/seminars /path/to/seminar-listings
 
 
-<Macro MacroSeminarListings $baseUrl $repoPath $includePath>
-	
-	# Include path
-	<LocationMatch $baseUrl>
-		php_value include_path "$includePath"
-	</LocationMatch>
+<Macro MacroSeminarListings $baseUrl $repoPath>
 	
 	# Data
 	Alias $baseUrl/images/ $repoPath/images/

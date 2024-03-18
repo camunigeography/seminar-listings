@@ -2,13 +2,12 @@
 
 # Settings
 $settings = array (
-	'hostname' => 'localhost',
 	'username' => 'my_username',
 	'password' => 'my_password',
 );
 
 # Load and run the application with the above settings
-require_once ('seminarListings.php');
+require_once ('vendor/autoload.php');
 new seminarListings ($settings);
 
 ?>

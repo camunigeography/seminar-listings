@@ -1,0 +1,14 @@
+{
+    "name": "camunigeography/seminar-listings",
+    "description": "Seminar listings display, as an integration with the University of Cambridge's talks.cam system",
+    "type": "project",
+    "license": "GPL-3.0-only",
+    "minimum-stability": "stable",
+    "require": {
+        "libpurecontent/frontcontrollerapplication": "^1.13",
+        "libpurecontent/application": "^1.9"
+    },
+    "autoload": {
+        "files": ["seminarListings.php"]
+    }
+}
