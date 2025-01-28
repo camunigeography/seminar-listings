@@ -53,7 +53,7 @@
 		</div>
 		{if (isSet ($seminarsIcal))}
 		<ul class="campl-unstyled-list campl-related-links">
-			<li class="comment">Add to your calendar (iCal feed):<br /><span class="small">{$seminarsIcal}</span></li>
+			<li><a href="{$seminarsIcal}">Add to your calendar</a></li>
 		</ul>
 		{/if}
 		

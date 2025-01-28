@@ -153,7 +153,7 @@ class seminarListings extends frontControllerApplication
 		# Add iCal link if there is a master list
 		if (isSet ($this->lists[$this->settings['masterList']])) {
 			$masterListId = $this->lists[$this->settings['masterList']]['talksdotcamListNumber'];
-			$this->template['seminarsIcal'] = 'https://talks.cam.ac.uk/show/ics/' . $masterListId;
+			$this->template['seminarsIcal'] = 'webcal://talks.cam.ac.uk/show/ics/' . $masterListId;
 		}
 		
 		# Process the template
@@ -184,7 +184,7 @@ class seminarListings extends frontControllerApplication
 		foreach ($lists as $moniker => $list) {
 			$lists[$moniker]['link'] = $this->baseUrl . "/{$moniker}/";
 			$lists[$moniker]['talksdotcamUrl'] = 'https://talks.cam.ac.uk/show/index/' . $list['talksdotcamListNumber'];
-			$lists[$moniker]['talksdotcamIcal'] = 'https://talks.cam.ac.uk/show/ics/' . $list['talksdotcamListNumber'];
+			$lists[$moniker]['talksdotcamIcal'] = 'webcal://talks.cam.ac.uk/show/ics/' . $list['talksdotcamListNumber'];
 			$lists[$moniker]['thumbnail'] = $this->getThumbnail ($moniker);
 		}
 		
