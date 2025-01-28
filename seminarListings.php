@@ -178,6 +178,7 @@ class seminarListings extends frontControllerApplication
 		foreach ($lists as $moniker => $list) {
 			$lists[$moniker]['link'] = $this->baseUrl . "/{$moniker}/";
 			$lists[$moniker]['talksdotcamUrl'] = 'https://talks.cam.ac.uk/show/index/' . $list['talksdotcamListNumber'];
+			$lists[$moniker]['talksdotcamIcal'] = 'https://talks.cam.ac.uk/show/ics/' . $list['talksdotcamListNumber'];
 			$lists[$moniker]['thumbnail'] = $this->getThumbnail ($moniker);
 		}
 		
