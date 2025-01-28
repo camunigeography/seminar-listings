@@ -91,7 +91,7 @@
 		
 		<ul class="campl-unstyled-list campl-related-links">
 			<li><a href="{$list.talksdotcamUrl}">More info on talks.cam</a></li>
-			<li><a href="{$list.talksdotcamIcal}">Add to your calendar</a></li>
+			<li><a href="{$list.talksdotcamIcal}"><img src="/images/icons/date.png" class="icon" /> Add to your calendar</a></li>
 		</ul>
 		
 	</div>
