@@ -51,6 +51,11 @@
 		<div class="campl-heading-container">
 			<h2>Forthcoming seminars</h2>
 		</div>
+		{if (isSet ($seminarsIcal))}
+		<ul class="campl-unstyled-list campl-related-links">
+			<li class="comment">Add to your calendar (iCal feed):<br /><span class="small">{$seminarsIcal}</span></li>
+		</ul>
+		{/if}
 		
 		<ul class="spaced small">
 		{if ($seminars)}

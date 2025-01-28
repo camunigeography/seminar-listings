@@ -149,6 +149,12 @@ class seminarListings extends frontControllerApplication
 		
 		# Get the seminars
 		$this->template['seminars'] = $this->getSeminars ($this->settings['masterList'], false, 10);
+
+		# Add iCal link if there is a master list
+		if (isSet ($this->lists[$this->settings['masterList']])) {
+			$masterListId = $this->lists[$this->settings['masterList']]['talksdotcamListNumber'];
+			$this->template['seminarsIcal'] = 'https://talks.cam.ac.uk/show/ics/' . $masterListId;
+		}
 		
 		# Process the template
 		$html = $this->templatise ();
