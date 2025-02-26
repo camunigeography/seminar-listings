@@ -51,11 +51,12 @@
 		<div class="campl-heading-container">
 			<h2>Forthcoming seminars</h2>
 		</div>
-		{if (isSet ($seminarsIcal))}
 		<ul class="campl-unstyled-list campl-related-links">
+			<li><a href="{$baseUrl}/calendar/">Listing with full details</li></li>
+			{if (isSet ($seminarsIcal))}
 			<li><a href="{$seminarsIcal}"><img src="/images/icons/date.png" class="icon" /> Add to calendar</a></li>
+			{/if}
 		</ul>
-		{/if}
 		
 		<ul class="spaced small">
 		{if ($seminars)}

@@ -30,6 +30,13 @@ class seminarListings extends frontControllerApplication
 	{
 		# Define available tasks
 		$actions = array (
+			'calendar' => array (
+				'enableIf' => $this->settings['masterList'],
+				'description' => false,
+				'url' => 'calendar/',
+				'tab' => 'Calendar',
+				'icon' => 'date',
+			),
 			'showlist' => array (
 				'description' => false,
 				'url' => '',
@@ -220,16 +227,18 @@ class seminarListings extends frontControllerApplication
 		$seminars = array ();
 		foreach ($list['talk'] as $talk) {
 			$talksdotcamUrl = 'https://www.talks.cam.ac.uk/talk/index/' . $talk['id'];
+			$abstractUnavailable = ($talk['abstract'] == 'Abstract not available');
 			$seminars[] = array (
 				'id' => $talk['id'],
 				'title' => $talk['title'],
 				'speaker' => $talk['speaker'],
+				'series' => $talk['series'],
 				'abstract' => $talk['abstract'],
-				'abstractHtml' => application::makeClickableLinks (application::formatTextBlock (str_replace ('@', '<span>&#64;</span>', $talk['abstract']), 'smaller')),
+				'abstractHtml' => application::makeClickableLinks (application::formatTextBlock (str_replace ('@', '<span>&#64;</span>', $talk['abstract']), 'abstract' . ($abstractUnavailable ? ' unavailable' : ''))),
 				'venue' => $talk['venue'],
 				'special_message' => $talk['special_message'],
 				'time' => date ('g.ia, l jS F Y', strtotime (preg_replace ('/ \+([0-9]{4})$/', '', $talk['start_time']))),		// Strip trailing timezone like " +0000" to prevent the wrong time being determined
-				'date' => date ('jS F Y', strtotime ($talk['start_time'])),
+				'date' => date ('l jS F Y', strtotime ($talk['start_time'])),
 				'day' => date ('d', strtotime ($talk['start_time'])),
 				'month' => date ('M', strtotime ($talk['start_time'])),
 				'url' => $talksdotcamUrl,
@@ -344,6 +353,35 @@ class seminarListings extends frontControllerApplication
 	}
 	
 	
+	# Function to show a full calendar page, if a master list is defined
+	public function calendar ()
+	{
+		# End if no master list actually exists
+		if (!isSet ($this->lists[$this->settings['masterList']])) {
+			$html = $this->page404 ();
+			echo $html;
+			return;
+		}
+		
+		# Get the seminars from the master list
+		$seminars = $this->getSeminars ($this->settings['masterList']);
+		$seminarsByDate = application::regroup ($seminars, 'date');
+		$this->template['seminarsByDate'] = $seminarsByDate;
+		
+		# Create the droplist
+		$this->template['droplist'] = $this->droplistHtml ($this->action);
+		
+		# Send the list metadata to the template
+		$this->template['list'] = $this->lists[$this->settings['masterList']];
+		
+		# Process the template
+		$html = $this->templatise ();
+		
+		# Show the HTML
+		echo $html;
+	}
+	
+	
 	# Function to show a list
 	public function showlist ($moniker)
 	{
@@ -383,6 +421,7 @@ class seminarListings extends frontControllerApplication
 		# Create the lists
 		$lists = array ();
 		$lists[$this->baseUrl . '/'] = 'Home';
+		$lists[$this->baseUrl . '/' . $this->actions['calendar']['url']] = 'Calendar';
 		foreach ($this->lists as $moniker => $list) {
 			if ($moniker == $this->settings['masterList']) {continue;}		// Skip master list
 			$url = $list['link'];

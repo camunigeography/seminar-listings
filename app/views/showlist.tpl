@@ -75,7 +75,7 @@
 	<div class="campl-content-container">
 		
 		{if $droplist}
-		<p>Switch to list:</p>
+		<p>Switch to:</p>
 		{$droplist}
 		{/if}
 		
