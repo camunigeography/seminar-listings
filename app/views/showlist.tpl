@@ -1,6 +1,6 @@
 
 
-<div class="campl-column8 campl-main-content" id="content">
+<div class="campl-wp-content">
 	
 	<h2>{$list.name|htmlspecialchars}</h2>
 	
@@ -71,28 +71,24 @@
 </div>
 
 
-<div class="campl-column4 campl-secondary-content">
-	<div class="campl-content-container">
-		
-		{if $droplist}
-		<p>Switch to:</p>
-		{$droplist}
-		{/if}
-		
-		{if $administrator}
-		<div class="clearfix">
-			<p class="primaryaction right"><a href="{$baseUrl}/data/lists/{$list.id}/edit.html" title="Edit the seminars listing, on talks.cam"><img src="/images/icons/pencil.png" class="icon" /> Edit list status</a></p>
-		</div>
-		{/if}
-		
-		<div class="campl-heading-container">
-			<h2>More details</h2>
-		</div>
-		
-		<ul class="campl-unstyled-list campl-related-links">
-			<li><a href="{$list.talksdotcamUrl}">More info on talks.cam</a></li>
-			<li><a href="{$list.talksdotcamIcal}"><img src="/images/icons/date.png" class="icon" /> Add to your calendar</a></li>
-		</ul>
-		
+<div class="campl-wp-sidebar">
+	
+	{if $droplist}
+	<p>Switch to:</p>
+	{$droplist}
+	{/if}
+	
+	{if $administrator}
+	<div class="clearfix">
+		<p class="primaryaction right"><a href="{$baseUrl}/data/lists/{$list.id}/edit.html" title="Edit the seminars listing, on talks.cam"><img src="/images/icons/pencil.png" class="icon" /> Edit list status</a></p>
 	</div>
+	{/if}
+	
+	<h2>More details</h2>
+	
+	<ul>
+		<li><a href="{$list.talksdotcamUrl}">More info on talks.cam</a></li>
+		<li><a href="{$list.talksdotcamIcal}"><img src="/images/icons/date.png" class="icon" /> Add to your calendar</a></li>
+	</ul>
+	
 </div>

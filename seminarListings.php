@@ -436,7 +436,7 @@ class seminarListings extends frontControllerApplication
 			}
 			if (!isSet ($lists[$category])) {$lists[$category] = array ();}	// Initialise
 			$url = $list['link'];
-			$name = application::str_truncate ($list['name'], 24, false, false, $respectWordBoundaries = false, $htmlMode = false);
+			$name = application::str_truncate ($list['name'], 21, false, false, $respectWordBoundaries = false, $htmlMode = false);
 			$lists[$category][$url] = $name;
 		}
 		

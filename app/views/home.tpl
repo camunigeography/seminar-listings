@@ -1,6 +1,6 @@
 
 
-<div class="campl-column8 campl-main-content">
+<div class="campl-wp-content">
 	
 	{if $userIsAdministrator}
 		<p class="actions right"><a href="{$baseUrl}/data/lists/"><img src="/images/icons/pencil.png" class="icon" /> Edit lists</a></p>
@@ -45,28 +45,24 @@
 </div>
 
 
-<div class="campl-column4 campl-secondary-content">
-	<div class="campl-content-container">
-		
-		<div class="campl-heading-container">
-			<h2>Forthcoming seminars</h2>
-		</div>
-		<ul class="campl-unstyled-list campl-related-links">
-			<li><a href="{$baseUrl}/calendar/">Listing with full details</li></li>
-			{if (isSet ($seminarsIcal))}
-			<li><a href="{$seminarsIcal}"><img src="/images/icons/date.png" class="icon" /> Add to calendar</a></li>
-			{/if}
-		</ul>
-		
-		<ul class="spaced small">
-		{if ($seminars)}
-		{foreach from=$seminars item=seminar}
-			<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|htmlspecialchars} <a href="{$seminar.link}">Details&hellip;</a></li>
-		{/foreach}
-		{else}
-			<li>There are no forthcoming seminars scheduled at present.</li>
+<div class="campl-wp-sidebar">
+	
+	<h2>Forthcoming seminars</h2>
+	<ul>
+		<li><a href="{$baseUrl}/calendar/">Listing with full details</li></li>
+		{if (isSet ($seminarsIcal))}
+		<li><a href="{$seminarsIcal}"><img src="/images/icons/date.png" class="icon" /> Add to calendar</a></li>
 		{/if}
-		</ul>
-		
-	</div>
+	</ul>
+	
+	<ul class="spaced small">
+	{if ($seminars)}
+	{foreach from=$seminars item=seminar}
+		<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|htmlspecialchars} <a href="{$seminar.link}">Details&hellip;</a></li>
+	{/foreach}
+	{else}
+		<li>There are no forthcoming seminars scheduled at present.</li>
+	{/if}
+	</ul>
+	
 </div>
