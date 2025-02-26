@@ -44,16 +44,16 @@
         },
         {
             "name": "libpurecontent/application",
-            "version": "v1.9.3",
+            "version": "v1.9.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/libpurecontent/application.git",
-                "reference": "6b0e2176772b07ca2ff55fb061f80e752b7a170b"
+                "reference": "8cbf81a580bad5e1010e34fe68cec70ac93bd5ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/libpurecontent/application/zipball/6b0e2176772b07ca2ff55fb061f80e752b7a170b",
-                "reference": "6b0e2176772b07ca2ff55fb061f80e752b7a170b",
+                "url": "https://api.github.com/repos/libpurecontent/application/zipball/8cbf81a580bad5e1010e34fe68cec70ac93bd5ee",
+                "reference": "8cbf81a580bad5e1010e34fe68cec70ac93bd5ee",
                 "shasum": ""
             },
             "require": {
@@ -78,9 +78,9 @@
             "description": "PHP library application within the pureContent library suite",
             "support": {
                 "issues": "https://github.com/libpurecontent/application/issues",
-                "source": "https://github.com/libpurecontent/application/tree/v1.9.3"
+                "source": "https://github.com/libpurecontent/application/tree/v1.9.5"
             },
-            "time": "2024-01-26T18:35:38+00:00"
+            "time": "2025-02-26T18:43:59+00:00"
         },
         {
             "name": "libpurecontent/csv",

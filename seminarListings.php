@@ -418,22 +418,33 @@ class seminarListings extends frontControllerApplication
 	# Function to create the droplist
 	private function droplistHtml ($current)
 	{
-		# Create the lists
+		# No droplist if only one entry
+		if (count ($this->lists) < 2) {return false;}
+		
+		# Define heading for archive category, which will appear at the end
+		$archiveCategoryLabel = 'Previous seminar series';
+		
+		# Create the lists, nesting by category and truncating long strings
 		$lists = array ();
 		$lists[$this->baseUrl . '/'] = 'Home';
 		$lists[$this->baseUrl . '/' . $this->actions['calendar']['url']] = 'Calendar';
 		foreach ($this->lists as $moniker => $list) {
 			if ($moniker == $this->settings['masterList']) {continue;}		// Skip master list
+			$category = $list['categoryTitle'];
+			if ($list['archived']) {
+				$category = $archiveCategoryLabel;
+			}
+			if (!isSet ($lists[$category])) {$lists[$category] = array ();}	// Initialise
 			$url = $list['link'];
-			$lists[$url] = $list['name'];
+			$name = application::str_truncate ($list['name'], 24, false, false, $respectWordBoundaries = false, $htmlMode = false);
+			$lists[$category][$url] = $name;
 		}
 		
-		# No droplist if only one entry
-		if (count ($lists) < 2) {return false;}
-		
-		# Truncate strings
-		foreach ($lists as $url => $name) {
-			$lists[$url] = application::str_truncate ($name, 25, false, false, $respectWordBoundaries = false, $htmlMode = false);
+		# Ensure archive category is last
+		if (isSet ($lists[$archiveCategoryLabel])) {
+			$archiveCategory = $lists[$archiveCategoryLabel];
+			unset ($lists[$archiveCategoryLabel]);
+			$lists[$archiveCategoryLabel] = $archiveCategory;
 		}
 		
 		# Set current
