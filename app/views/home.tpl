@@ -1,6 +1,6 @@
 
 
-<div class="campl-column9 campl-main-content">
+<div class="campl-column8 campl-main-content">
 	
 	{if $userIsAdministrator}
 		<p class="actions right"><a href="{$baseUrl}/data/lists/"><img src="/images/icons/pencil.png" class="icon" /> Edit lists</a></p>
@@ -45,7 +45,7 @@
 </div>
 
 
-<div class="campl-column3 campl-secondary-content">
+<div class="campl-column4 campl-secondary-content">
 	<div class="campl-content-container">
 		
 		<div class="campl-heading-container">
