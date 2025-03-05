@@ -5,5 +5,5 @@ div.details {margin-bottom: 2.4em;}
 p.abstract {font-size: 1em;}
 p.abstract.unavailable {font-style: italic;}
 table.calendar {table-layout: fixed; width: 100%;}
-table.calendar td p {overflow: clip;}	/* Overly-long URLs will be chopped but work with copy and paste */
+table.calendar td p {overflow: clip;}	/* Overly-long URLs will be visually chopped but click / copy-and-paste will work as normal */
 table.calendar td p.abstract {font-size: 0.87em;}

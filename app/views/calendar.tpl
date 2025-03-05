@@ -15,7 +15,7 @@
 		<h3>{$date}</h3>
 		<table class="calendar graybox">
 		{foreach from=$seminars item=seminar}
-			<tr><td style="overflow: auto">
+			<tr id="id{$seminar.id}"><td>
 				<h4>{$seminar.series|htmlspecialchars}</h4>
 				<h5><em>{$seminar.title|htmlspecialchars}</em></h5>
 				{if ($seminar.special_message)}
