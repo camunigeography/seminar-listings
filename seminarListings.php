@@ -239,7 +239,7 @@ class seminarListings extends frontControllerApplication
 				'special_message' => $talk['special_message'],
 				'time' => date ('g.ia, l jS F Y', strtotime (preg_replace ('/ \+([0-9]{4})$/', '', $talk['start_time']))),		// Strip trailing timezone like " +0000" to prevent the wrong time being determined
 				'date' => date ('l jS F Y', strtotime ($talk['start_time'])),
-				'day' => date ('d', strtotime ($talk['start_time'])),
+				'day' => date ('j', strtotime ($talk['start_time'])),
 				'month' => date ('M', strtotime ($talk['start_time'])),
 				'url' => $talksdotcamUrl,
 				'link' => ($talk['seriesLink'] ? $talk['seriesLink'] . '#id' . $talk['id'] : $talksdotcamUrl),
