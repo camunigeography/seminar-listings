@@ -226,7 +226,7 @@ class seminarListings extends frontControllerApplication
 		# Convert talks to simplified structure
 		$seminars = array ();
 		foreach ($list['talk'] as $talk) {
-			$talksdotcamUrl = 'https://www.talks.cam.ac.uk/talk/index/' . $talk['id'];
+			$talksdotcamUrl = 'https://talks.cam.ac.uk/talk/index/' . $talk['id'];
 			$abstractUnavailable = ($talk['abstract'] == 'Abstract not available');
 			$seminars[] = array (
 				'id' => $talk['id'],
@@ -463,7 +463,7 @@ class seminarListings extends frontControllerApplication
 	{
 		# Databinding attributes
 		$dataBindingAttributes = array (
-			array ($this->settings['database'], $this->settings['table'], 'talksdotcamListNumber', array ('prepend' => 'www.talks.cam.ac.uk/show/index/')),
+			array ($this->settings['database'], $this->settings['table'], 'talksdotcamListNumber', array ('prepend' => 'https://talks.cam.ac.uk/show/index/')),
 			array ($this->settings['database'], $this->settings['table'], 'talksdotcamName', array ('editable' => false)),
 			array ($this->settings['database'], $this->settings['table'], 'editors', array (
 				'type' => 'select',
