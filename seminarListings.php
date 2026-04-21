@@ -190,7 +190,7 @@ class seminarListings extends frontControllerApplication
 		# Decorate the lists
 		foreach ($lists as $moniker => $list) {
 			$lists[$moniker]['link'] = $this->baseUrl . "/{$moniker}/";
-			$lists[$moniker]['talksdotcamUrl'] = 'https://talks.cam.ac.uk/show/index/' . $list['talksdotcamListNumber'];
+			$lists[$moniker]['talksdotcamUrl'] = 'https://talks.cam.ac.uk/show/index/' . $list['talksdotcamListNumber'] . '/';
 			$lists[$moniker]['talksdotcamIcal'] = 'webcal://talks.cam.ac.uk/show/ics/' . $list['talksdotcamListNumber'];
 			$lists[$moniker]['thumbnail'] = $this->getThumbnail ($moniker);
 		}
@@ -226,7 +226,7 @@ class seminarListings extends frontControllerApplication
 		# Convert talks to simplified structure
 		$seminars = array ();
 		foreach ($list['talk'] as $talk) {
-			$talksdotcamUrl = 'https://talks.cam.ac.uk/talk/index/' . $talk['id'];
+			$talksdotcamUrl = 'https://talks.cam.ac.uk/talk/index/' . $talk['id'] . '/';
 			$abstractUnavailable = ($talk['abstract'] == 'Abstract not available');
 			$seminars[] = array (
 				'id' => $talk['id'],
@@ -255,7 +255,7 @@ class seminarListings extends frontControllerApplication
 	private function getFeed ($listId, $moniker, $archived = false, $limit = false)
 	{
 		# Construct the URL
-		$url = "https://talks.cam.ac.uk/show/xml/{$listId}?layout=empty";
+		$url = "https://talks.cam.ac.uk/show/xml/{$listId}/?layout=empty";
 		
 		# For archived mode, add additional parameters
 		if ($archived) {
