@@ -234,7 +234,7 @@ class seminarListings extends frontControllerApplication
 				'speaker' => $talk['speaker'],
 				'series' => $talk['series'],
 				'abstract' => $talk['abstract'],
-				'abstractHtml' => application::makeClickableLinks (application::formatTextBlock (str_replace ('@', '<span>&#64;</span>', $talk['abstract']), 'abstract' . ($abstractUnavailable ? ' unavailable' : ''))),
+				'abstractHtml' => application::makeClickableLinks (application::formatTextBlock (str_replace ('@', '<span>&#64;</span>', str_replace ("\n\n", "\n", strip_tags (str_replace ("<p>", "\n\n", $talk['abstract'])))), 'abstract' . ($abstractUnavailable ? ' unavailable' : ''))),
 				'venue' => $talk['venue'],
 				'special_message' => $talk['special_message'],
 				'time' => date ('g.ia, l jS F Y', strtotime (preg_replace ('/ \+([0-9]{4})$/', '', $talk['start_time']))),		// Strip trailing timezone like " +0000" to prevent the wrong time being determined
