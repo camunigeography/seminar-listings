@@ -16,7 +16,7 @@
 	
 	{if $isEditor}
 	<div class="clearfix">
-		<p class="primaryaction right"><a href="https://talks.cam.ac.uk/list/edit/{$list.talksdotcamListNumber}" title="Edit the seminars listing, on talks.cam"><img src="/images/icons/pencil.png" class="icon" /> Edit seminars</a></p>
+		<p class="primaryaction right"><a href="https://talks.cam.ac.uk/talk/new/{$list.talksdotcamListNumber}/" title="Add a new talk to the seminars listing, on talks.cam"><img src="/images/icons/pencil.png" class="icon" /> Add seminar</a></p>
 	</div>
 	{/if}
 	
