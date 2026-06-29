@@ -18,6 +18,7 @@ class seminarListings extends frontControllerApplication
 			'disableTabs'			=> true,
 			'useTemplating'			=> true,
 			'useEditing'			=> true,
+			'cacheSeconds'			=> 0,		// Disabled by default (0)
 		);
 		
 		# Return the defaults
@@ -267,9 +268,8 @@ class seminarListings extends frontControllerApplication
 			$url .= '&limit=' . $limit;
 		}
 		
-		# Get the data
-		ini_set ('default_socket_timeout', 4);
-		$xmlString = file_get_contents ($url);
+		# Get the data, via cache if required
+		$xmlString = application::file_get_contents_cacheable ($url, $this->settings['cacheSeconds'], $this->applicationRoot . '/tmp/cache/', 4);
 		
 		# Convert to XML; note that empty tags like <something></something> will become an empty array, which is fixed later below
 		$xml = simplexml_load_string ($xmlString);
