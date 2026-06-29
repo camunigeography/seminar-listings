@@ -7,7 +7,7 @@
 	{/if}
 	
 	{foreach from=$listsByCategory key=category item=lists}
-	<h3>{$category|htmlspecialchars}</h3>
+	<h3>{$category|escape}</h3>
 	<div class="clearfix">
 		{foreach from=$lists item=list name=lists}
 		<div class="campl-column6">
@@ -18,7 +18,7 @@
 					</div>
 					<div class="campl-focus-teaser-txt">
 						<div class="campl-content-container campl-horizontal-teaser-txt">
-							<h3 class="campl-teaser-title"><a href="{$list.link}" class="noautoarrow noautoicon">{$list.name|htmlspecialchars}</a></h3>
+							<h3 class="campl-teaser-title"><a href="{$list.link}" class="noautoarrow noautoicon">{$list.name|escape}</a></h3>
 							<a class="ir campl-focus-link noautoarrow" href="{$list.link}">Read more</a>
 						</div>
 					</div>
@@ -37,7 +37,7 @@
 	<h2>Previous seminar series</h2>
 	<ul>
 	{foreach from=$archivedLists item=list}
-		<li><a href="{$list.link}">{$list.name|htmlspecialchars}</a></li>
+		<li><a href="{$list.link}">{$list.name|escape}</a></li>
 	{/foreach}
 	</ul>
 	{/if}
@@ -50,7 +50,7 @@
 	<h2>Forthcoming seminars</h2>
 	<ul>
 		<li><a href="{$baseUrl}/calendar/">Listing with full details</li></li>
-		{if (isSet ($seminarsIcal))}
+		{if (isset ($seminarsIcal))}
 		<li><a href="{$seminarsIcal}"><img src="/images/icons/date.png" class="icon" /> Add to calendar</a></li>
 		{/if}
 	</ul>
@@ -58,7 +58,7 @@
 	<ul class="spaced small">
 	{if ($seminars)}
 	{foreach from=$seminars item=seminar}
-		<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|htmlspecialchars} <a href="{$seminar.link}">Details&hellip;</a></li>
+		<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|escape} <a href="{$seminar.link}">Details&hellip;</a></li>
 	{/foreach}
 	{else}
 		<li>There are no forthcoming seminars scheduled at present.</li>

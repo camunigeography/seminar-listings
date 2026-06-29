@@ -2,7 +2,7 @@
 
 <div class="campl-wp-content">
 	
-	<h2>{$list.name|htmlspecialchars}</h2>
+	<h2>{$list.name|escape}</h2>
 	
 	{if $isEditor}
 	<div class="clearfix">
@@ -34,16 +34,16 @@
 								<div class="campl-highlight-day">{$seminar.day}</div>{$seminar.month}
 							</div>
 						</div>
-						<div>{$seminar.title|htmlspecialchars}</div>
+						<div>{$seminar.title|escape}</div>
 					</div>
 				</div>
 			</h2>
 			{if ($seminar.special_message)}
-				<p class="specialmessage">{$seminar.special_message|htmlspecialchars}</p>
+				<p class="specialmessage">{$seminar.special_message|escape}</p>
 			{/if}
-			<p><strong>Speaker:</strong> {$seminar.speaker|htmlspecialchars}</p>
+			<p><strong>Speaker:</strong> {$seminar.speaker|escape}</p>
 			<p><strong>Time:</strong> {$seminar.time}</p>
-			<p><strong>Location:</strong> {$seminar.venue|htmlspecialchars}</p>
+			<p><strong>Location:</strong> {$seminar.venue|escape}</p>
 			{$seminar.abstractHtml}
 		</div>
 			
@@ -62,7 +62,7 @@
 	<div class="graybox">
 		<ul class="spaced small">
 		{foreach from=$archived item=seminar}
-			<li id="id{$seminar.id}"><strong>{$seminar.date} - {$seminar.speaker|htmlspecialchars}</strong>:<br />{$seminar.title|htmlspecialchars}. <a href="{$seminar.url}">Details&hellip;</a></li>
+			<li id="id{$seminar.id}"><strong>{$seminar.date} - {$seminar.speaker|escape}</strong>:<br />{$seminar.title|escape}. <a href="{$seminar.url}">Details&hellip;</a></li>
 		{/foreach}
 		</ul>
 	</div>

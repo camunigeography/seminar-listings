@@ -4,7 +4,7 @@
 	
 	<h2>Calendar</h2>
 	
-	{if (isSet ($seminarsIcal))}
+	{if (isset ($seminarsIcal))}
 	<ul>
 		<li><a href="{$seminarsIcal}"><img src="/images/icons/date.png" class="icon" /> Add to calendar</a></li>
 	</ul>
@@ -16,14 +16,14 @@
 		<table class="calendar graybox">
 		{foreach from=$seminars item=seminar}
 			<tr id="id{$seminar.id}"><td>
-				<h4>{$seminar.series|htmlspecialchars}</h4>
-				<h5><em>{$seminar.title|htmlspecialchars}</em></h5>
+				<h4>{$seminar.series|escape}</h4>
+				<h5><em>{$seminar.title|escape}</em></h5>
 				{if ($seminar.special_message)}
-					<p class="specialmessage">{$seminar.special_message|htmlspecialchars}</p>
+					<p class="specialmessage">{$seminar.special_message|escape}</p>
 				{/if}
-				<p>{$seminar.speaker|htmlspecialchars}<br />
+				<p>{$seminar.speaker|escape}<br />
 				{$seminar.time}<br />
-				{$seminar.venue|htmlspecialchars}</p>
+				{$seminar.venue|escape}</p>
 				{$seminar.abstractHtml}
 			</td></tr>
 		{/foreach}
