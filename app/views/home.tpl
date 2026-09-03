@@ -55,14 +55,14 @@
 		{/if}
 	</ul>
 	
-	<ul class="spaced small">
 	{if ($seminars)}
-	{foreach from=$seminars item=seminar}
-		<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|escape} <a href="{$seminar.link}">Details&hellip;</a></li>
-	{/foreach}
+		<ul class="spaced small">
+		{foreach from=$seminars item=seminar}
+			<li><strong>{$seminar.date}</strong>:<br />{$seminar.title|escape} <a href="{$seminar.link}">Details&hellip;</a></li>
+		{/foreach}
+		</ul>
 	{else}
-		<li>There are no forthcoming seminars scheduled at present.</li>
+		<p>There are no forthcoming seminars scheduled at present.</p>
 	{/if}
-	</ul>
 	
 </div>
