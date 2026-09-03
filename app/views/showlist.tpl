@@ -50,9 +50,13 @@
 		{/foreach}
 		
 		{else}
-			<div class="graybox">
-				<p><strong>There are no forthcoming seminars scheduled at present.</strong></p>
-			</div>
+			{if (isset ($errorSeminars))}
+				<p class="warning">{$errorSeminars|escape}</p>
+			{else}
+				<div class="graybox">
+					<p><strong>There are no forthcoming seminars scheduled at present.</strong></p>
+				</div>
+			{/if}
 		{/if}
 		
 	{/if}
@@ -66,6 +70,11 @@
 		{/foreach}
 		</ul>
 	</div>
+	{/if}
+	{if (isset ($errorArchived))}
+		{if (!isset ($errorSeminars))}	{* Don't show error message twice (even though a different feed URL) *}
+			<p class="warning">{$errorArchived|escape}</p>
+		{/if}
 	{/if}
 	
 </div>

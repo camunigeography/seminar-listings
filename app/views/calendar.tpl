@@ -30,7 +30,11 @@
 		</table>
 	{/foreach}
 	{else}
-		<p>There are no forthcoming seminars scheduled at present.</p>
+		{if (isset ($error))}
+			<p class="warning">{$error|escape}</p>
+		{else}
+			<p>There are no forthcoming seminars scheduled at present.</p>
+		{/if}
 	{/if}
 	
 </div>

@@ -156,8 +156,13 @@ class seminarListings extends frontControllerApplication
 		$this->template['archivedLists'] = $listsByGroup[1];
 		
 		# Get the seminars
-		$this->template['seminars'] = $this->getSeminars ($this->settings['masterList'], false, 10);
+		$this->template['seminars'] = $this->getSeminars ($this->settings['masterList'], $error /* returned by reference */, false, 10);
 
+		# If error, send to the template (seminars array will be empty)
+		if ($error) {
+			$this->template['error'] = $error;
+		}
+		
 		# Add iCal link if there is a master list
 		if (isSet ($this->lists[$this->settings['masterList']])) {
 			$masterListId = $this->lists[$this->settings['masterList']]['talksdotcamListNumber'];
@@ -209,14 +214,17 @@ class seminarListings extends frontControllerApplication
 	
 	
 	# Function to get seminars in a list
-	private function getSeminars ($moniker, $archived = false, $limit = false)
+	private function getSeminars ($moniker, &$error = false, $archived = false, $limit = false)
 	{
 		# Ensure the list ID exists
 		if (!isSet ($this->lists[$moniker])) {return array ();}
 		
 		# Get the feed
 		$listId = $this->lists[$moniker]['talksdotcamListNumber'];
-		$list = $this->getFeed ($listId, $moniker, $archived, $limit);
+		if (!$list = $this->getFeed ($listId, $moniker, $archived, $limit, $error /* returned by reference */)) {
+			// $error will now be populated
+			return array ();
+		}
 		
 		# Add the metadata from the upstream feed to the list metadata
 		$this->lists[$moniker]['details'] = $list['details'];
@@ -253,7 +261,7 @@ class seminarListings extends frontControllerApplication
 	
 	
 	# Function to get a feed for a list
-	private function getFeed ($listId, $moniker, $archived = false, $limit = false)
+	private function getFeed ($listId, $moniker, $archived = false, $limit = false, &$error = false)
 	{
 		# Construct the URL
 		$url = "https://talks.cam.ac.uk/show/xml/{$listId}/?layout=empty";
@@ -270,6 +278,13 @@ class seminarListings extends frontControllerApplication
 		
 		# Get the data, via cache if required
 		$xmlString = application::file_get_contents_cacheable ($url, $this->settings['cacheSeconds'], $this->applicationRoot . '/tmp/cache/', 4);
+		
+		# Handle failed retrieval
+		if (!$xmlString) {
+			$list = array ();
+			$error = 'Apologies, we were temporarily unable to load the listing from talks.cam - please try again later.';
+			return $list;
+		}
 		
 		# Convert to XML; note that empty tags like <something></something> will become an empty array, which is fixed later below
 		$xml = simplexml_load_string ($xmlString);
@@ -364,9 +379,14 @@ class seminarListings extends frontControllerApplication
 		}
 		
 		# Get the seminars from the master list
-		$seminars = $this->getSeminars ($this->settings['masterList']);
+		$seminars = $this->getSeminars ($this->settings['masterList'], $error /* returned by reference */);
 		$seminarsByDate = application::regroup ($seminars, 'date');
 		$this->template['seminarsByDate'] = $seminarsByDate;
+		
+		# If error, send to the template (seminars array will be empty)
+		if ($error) {
+			$this->template['error'] = $error;
+		}
 		
 		# Create the droplist
 		$this->template['droplist'] = $this->droplistHtml ($this->action);
@@ -396,10 +416,16 @@ class seminarListings extends frontControllerApplication
 		$this->template['droplist'] = $this->droplistHtml ($moniker);
 		
 		# Get the seminars
-		$this->template['seminars'] = $this->getSeminars ($moniker);
+		$this->template['seminars'] = $this->getSeminars ($moniker, $errorSeminars /* returned by reference */);
+		if ($errorSeminars) {
+			$this->template['errorSeminars'] = $errorSeminars;
+		}
 		
 		# Get the archived seminars
-		$this->template['archived'] = $this->getSeminars ($moniker, true);
+		$this->template['archived'] = $this->getSeminars ($moniker, $errorArchived /* returned by reference */, true);
+		if ($errorArchived) {
+			$this->template['errorArchived'] = $errorArchived;
+		}
 		
 		# Send the list metadata to the template
 		$this->template['list'] = $this->lists[$moniker];
