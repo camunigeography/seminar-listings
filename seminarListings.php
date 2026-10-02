@@ -151,8 +151,20 @@ class seminarListings extends frontControllerApplication
 		# Split non-archived lists by category title
 		$listsByCategory = application::regroup ($listsByGroup[''], 'categoryTitle', $removeGroupField = false);
 		
-		# Send to the template
-		$this->template['listsByCategory'] = $listsByCategory;
+		# List boxes
+		#!# Boxes library dependency needs to be added to deployment
+		$listBoxesByCategory = array ();
+		foreach ($listsByCategory as $category => $lists) {
+			$boxes = array ();
+			$listBoxesByCategory[$category] = array ();
+			foreach ($lists as $id => $list) {
+				$boxes[] = array ($list['link'], $list['name'], false, $list['link'], $list['thumbnail']);	// $path, $title, $descriptionHtml, $target, $enableImage
+				$listBoxesByCategory[$category] = boxes::multiple ($boxes);
+			}
+		}
+		$this->template['listBoxesByCategory'] = $listBoxesByCategory;
+		
+		# Archived lists
 		$this->template['archivedLists'] = $listsByGroup[1];
 		
 		# Get the seminars
