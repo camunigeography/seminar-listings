@@ -7,3 +7,10 @@ p.abstract.unavailable {font-style: italic;}
 table.calendar {table-layout: fixed; width: 100%;}
 table.calendar td p {overflow: clip;}	/* Overly-long URLs will be visually chopped but click / copy-and-paste will work as normal */
 table.calendar td p.abstract {font-size: 0.87em;}
+
+/* Two-column layout */
+.twocolumns {display: grid; gap: 1rem; grid-template-columns: 2fr 1fr;}
+@media (max-width: 768px) {
+	.twocolumns {grid-template-columns: 1fr;}
+}
+.twocolumns .sidebarcolumn {padding: 0 20px; background-color: #eee;}

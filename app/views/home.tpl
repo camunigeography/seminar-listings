@@ -1,5 +1,6 @@
 
-	<div class="campl-wp-content">
+<div class="twocolumns">
+	<div class="maincolumn">
 
 		{if $userIsAdministrator}
 			<p class="actions right"><a href="{$baseUrl}/data/lists/"><img src="/images/icons/pencil.png" class="icon" /> Edit lists</a></p>
@@ -44,7 +45,7 @@
 	</div>
 
 
-	<div class="campl-wp-sidebar">
+	<div class="sidebarcolumn">
 		
 		<h2>Forthcoming seminars</h2>
 		<ul>
@@ -69,3 +70,4 @@
 		{/if}
 		
 	</div>
+</div>

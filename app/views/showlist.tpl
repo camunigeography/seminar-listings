@@ -1,5 +1,6 @@
 
-	<div class="campl-wp-content">
+<div class="twocolumns">
+	<div class="maincolumn">
 
 		<h2>{$list.name|escape}</h2>
 		
@@ -79,7 +80,7 @@
 	</div>
 
 
-	<div class="campl-wp-sidebar">
+	<div class="sidebarcolumn">
 		
 		{if $droplist}
 		<p>Switch to:</p>
@@ -100,3 +101,4 @@
 		</ul>
 		
 	</div>
+</div>

@@ -1,5 +1,6 @@
 
-	<div class="campl-wp-content">
+<div class="twocolumns">
+	<div class="maincolumn">
 		
 		<h2>Calendar</h2>
 		
@@ -39,7 +40,7 @@
 	</div>
 
 
-	<div class="campl-wp-sidebar">
+	<div class="sidebarcolumn">
 		
 		<p>Switch to:</p>
 		{$droplist}
@@ -52,3 +53,4 @@
 		</ul>
 		
 	</div>
+</div>
